@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.baris.domain.Hero;
+import com.baris.exception.ResourceNotFoundException;
 import com.baris.repository.HeroRepository;
 
 @RestController
@@ -41,22 +42,30 @@ public class HeroController {
 	
 	@RequestMapping(value="/heroes/{heroId}", method=RequestMethod.GET)
 	public ResponseEntity<?> getHero(@PathVariable Long heroId) {
+		verifyHero(heroId);
 		Hero hero = heroRepository.findOne(heroId);
 		return new ResponseEntity<>(hero, HttpStatus.OK); 
 	}
 	
 	@RequestMapping(value="/heroes/{heroId}", method=RequestMethod.PUT)
 	public ResponseEntity<?> updateHero(@RequestBody Hero hero, @PathVariable Long heroId) {
+		verifyHero(heroId);
 		heroRepository.save(hero);
 		return new ResponseEntity<>(HttpStatus.OK); 
 	}
 	
 	@RequestMapping(value="/heroes/{heroId}", method=RequestMethod.DELETE)
 	public ResponseEntity<?> deleteHero(@PathVariable Long heroId) {
+		verifyHero(heroId);
 		heroRepository.delete(heroId);
 		return new ResponseEntity<>(HttpStatus.OK); 
 	}
 	
-	
+	protected void verifyHero(Long heroId) throws ResourceNotFoundException {
+		Hero hero = heroRepository.findOne(heroId);
+		if (hero == null) {
+			throw new ResourceNotFoundException("No hero found with id " + heroId);
+		}
+	}
 
 }
