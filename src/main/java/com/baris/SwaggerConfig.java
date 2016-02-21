@@ -18,9 +18,36 @@ public class SwaggerConfig {
 	private SpringSwaggerConfig springSwaggerConfig;
 	
 	@Bean
-	public SwaggerSpringMvcPlugin configureSwagger() {
+	public SwaggerSpringMvcPlugin configureSwaggerV1() {
 		SwaggerSpringMvcPlugin swaggerSpringMvcPlugin = new SwaggerSpringMvcPlugin(this.springSwaggerConfig);
 		
+		swaggerSpringMvcPlugin
+					.apiInfo(getAppInfo())
+					.apiVersion("1.0")
+					.includePatterns("/v1/*.*")
+					.swaggerGroup("v1");
+		
+		swaggerSpringMvcPlugin.useDefaultResponseMessages(false);
+		
+	    return swaggerSpringMvcPlugin;
+	}
+	
+	@Bean
+	public SwaggerSpringMvcPlugin configureSwaggerV2() {
+		SwaggerSpringMvcPlugin swaggerSpringMvcPlugin = new SwaggerSpringMvcPlugin(this.springSwaggerConfig);
+		
+		swaggerSpringMvcPlugin
+					.apiInfo(getAppInfo())
+					.apiVersion("2.0")
+					.includePatterns("/v2/*.*")
+					.swaggerGroup("v2");
+		
+		swaggerSpringMvcPlugin.useDefaultResponseMessages(false);
+		
+	    return swaggerSpringMvcPlugin;
+	}
+
+	private ApiInfo getAppInfo() {
 		ApiInfo apiInfo = new ApiInfoBuilder()
 							        .title("Super Heroes REST API")
 							        .description("Super Heroes Api for creating and managing heroes")
@@ -29,14 +56,7 @@ public class SwaggerConfig {
 							        .license("MIT License")
 							        .licenseUrl("http://opensource.org/licenses/MIT")
 							        .build();
-		
-		swaggerSpringMvcPlugin
-					.apiInfo(apiInfo)
-					.apiVersion("1.0")
-					.includePatterns("/heroes/*.*");
-		
-		swaggerSpringMvcPlugin.useDefaultResponseMessages(false);
-		
-	    return swaggerSpringMvcPlugin;
+		return apiInfo;
 	}
+
 }

@@ -1,4 +1,4 @@
-package com.baris.controller;
+package com.baris.v1.controller;
 
 import java.net.URI;
 
@@ -24,7 +24,8 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
-@RestController
+@RestController("heroRepositoryV1")
+@RequestMapping("/v1/")
 @Api(value="heroes", description="Super Heroes API")
 public class HeroController {
 	
