@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,16 +24,19 @@ public class Hero {
 	private Long id;
 	
 	@Column(name="NAME")
+	@NotNull
 	private String name;
 	
 	@Column(name="PSEUDONYM")
 	private String pseudonym;
 	
 	@Column(name="PUBLISHER")
+	@NotNull
 	private String publisher;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="HERO_ID")
+	@Size(min=1, max=10)
 	private Set<Power> powers;
 	
 	@Column(name="ALLY")

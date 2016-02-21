@@ -2,6 +2,8 @@ package com.baris.controller;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,7 @@ public class HeroController {
 	private HeroRepository heroRepository;
 	
 	@RequestMapping(value="/heroes", method=RequestMethod.POST)
-	public ResponseEntity<?> createHero(@RequestBody Hero hero) {
+	public ResponseEntity<?> createHero(@Valid @RequestBody Hero hero) {
 		hero = heroRepository.save(hero);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
