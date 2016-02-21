@@ -6,11 +6,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,12 +34,8 @@ public class Hero {
 	@JoinColumn(name="HERO_ID")
 	private Set<Power> powers;
 	
-	@ManyToOne(optional=true, fetch=FetchType.LAZY)
-	@JoinColumn(name="ALLY_ID")
-	private Hero ally;
-	
-	@OneToMany(mappedBy="ally")
-	private Set<Hero> allies;
+	@Column(name="ALLY")
+	private String ally;
 	
 	@Column(name="FIRST_APPEARANCE")
 	@JsonFormat(pattern="yyyy-MM-dd")
@@ -86,17 +80,13 @@ public class Hero {
 	public void setPowers(Set<Power> powers) {
 		this.powers = powers;
 	}
+	
+	public String getAlly() {
+		return ally;
+	}
 
-	public void setAlly(Hero ally) {
+	public void setAlly(String ally) {
 		this.ally = ally;
-	}
-
-	public Set<Hero> getAllies() {
-		return allies;
-	}
-
-	public void setAllies(Set<Hero> allies) {
-		this.allies = allies;
 	}
 
 	public Date getFirstAppearance() {
@@ -110,7 +100,7 @@ public class Hero {
 	@Override
 	public String toString() {
 		return "Hero [id=" + id + ", name=" + name + ", pseudonym=" + pseudonym + ", publisher=" + publisher
-				+ ", powers=" + powers + ", ally=" + ally + ", allies=" + allies + "]";
+				+ ", powers=" + powers + ", ally=" + ally + ", firstAppearance=" + firstAppearance + "]";
 	}
 
 }
