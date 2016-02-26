@@ -51,10 +51,6 @@ public class SwaggerConfig {
 		ApiInfo apiInfo = new ApiInfoBuilder()
 							        .title("Super Heroes REST API")
 							        .description("Super Heroes Api for creating and managing heroes")
-							        .termsOfServiceUrl("http://example.com/terms-of-service")
-							        .contact("info@example.com")
-							        .license("MIT License")
-							        .licenseUrl("http://opensource.org/licenses/MIT")
 							        .build();
 		return apiInfo;
 	}
